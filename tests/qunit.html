@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<title>QUnit</title>
+		<link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.12.0.css" />
+		<script src="http://code.jquery.com/qunit/qunit-1.12.0.js"></script>
+		<script src="../source/date_to_string.js"></script>
+	</head>
+	<body>
+		<div id="qunit"></div>
+		<div id="qunit-fixture"></div>
+		<script>
+			/* <![CDATA[ */
+				test("Individual Formats (Dynamic)",function() {
+					equal(date_to_string("a"),new Date().getHours() < 12 ? "am" : "pm","Check 'a' format");
+					equal(date_to_string("A"),new Date().getHours() < 12 ? "AM" : "PM","Check 'A' format");
+					equal(date_to_string("B"),("000" + Math.floor((new Date().getHours() * 60 * 60 + (new Date().getMinutes() + 60 + new Date().getTimezoneOffset()) * 60 + new Date().getSeconds()) / 86.4) % 1000).slice(-3),"Check 'B' format");
+					equal(date_to_string("c"),date_to_string("Y-m-d\\TH:i:s"),"Check 'c' format");
+					equal(date_to_string("d"),(new Date().getDate() < 10 ? "0" : "") + new Date().getDate(),"Check 'd' format");
+					equal(date_to_string("D"),(function() {
+						switch (new Date().getDay())
+						{
+							case 0:
+								return "Sun";
+
+							case 1:
+								return "Mon";
+
+							case 2:
+								return "Tue";
+
+							case 3:
+								return "Wed";
+
+							case 4:
+								return "Thu";
+
+							case 5:
+								return "Fri";
+
+							case 6:
+								return "Sat";
+						}
+					})(),"Check 'D' format");
+					equal(date_to_string("e"),(function() {
+						var
+							first = parseInt(Math.abs(new Date().getTimezoneOffset() / 60),10),
+							second = Math.abs(new Date().getTimezoneOffset() % 60);
+						return (new Date().getTimezoneOffset() < 0 ? "+" : "-") + (first < 10 ? "0" : "") + first + (second < 10 ? "0" : "") + second;
+					})(),"Check 'e' format");
+					equal(date_to_string("F"),(function() {
+						switch (new Date().getMonth())
+						{
+							case 0:
+								return "January";
+
+							case 1:
+								return "February";
+
+							case 2:
+								return "March";
+
+							case 3:
+								return "April";
+
+							case 4:
+								return "May";
+
+							case 5:
+								return "June";
+
+							case 6:
+								return "July";
+
+							case 7:
+								return "August";
+
+							case 8:
+								return "September";
+
+							case 9:
+								return "October";
+
+							case 10:
+								return "November";
+
+							case 11:
+								return "December";
+						}
+					})(),"Check 'F' format");
+					equal(date_to_string("g"),new Date().getHours() > 12 ? new Date().getHours() - 12 : new Date().getHours(),"Check 'g' format");
+					equal(date_to_string("G"),new Date().getHours(),"Check 'G' format");
+					equal(date_to_string("h"),(function() {
+						var hour = new Date().getHours() > 12 ? new Date().getHours() - 12 : new Date().getHours();
+						return (hour < 10 ? "0" : "") + hour;
+					})(),"Check 'h' format");
+					equal(date_to_string("H"),(new Date().getHours() < 10 ? "0" : "") + new Date().getHours(),"Check 'H' format");
+					equal(date_to_string("i"),(new Date().getMinutes() < 10 ? "0" : "") + new Date().getMinutes(),"Check 'i' format");
+					equal(date_to_string("I"),new Date().getTimezoneOffset() < Math.max(new Date(new Date().getFullYear(),0,1).getTimezoneOffset(),new Date(new Date().getFullYear(),6,1).getTimezoneOffset()) ? 1 : 0,"Check 'I' format");
+					equal(date_to_string("j"),new Date().getDate(),"Check 'j' format");
+					equal(date_to_string("l"),(function() {
+						switch (new Date().getDay())
+						{
+							case 0:
+								return "Sunday";
+
+							case 1:
+								return "Monday";
+
+							case 2:
+								return "Tuesday";
+
+							case 3:
+								return "Wednesday";
+
+							case 4:
+								return "Thursday";
+
+							case 5:
+								return "Friday";
+
+							case 6:
+								return "Saturday";
+						}
+					})(),"Check 'l' format");
+					equal(date_to_string("L"),new Date(new Date().getFullYear(),1,29).getMonth() == 1 ? 1 : 0,"Check 'L' format");
+					equal(date_to_string("m"),(new Date().getMonth() + 1 < 10 ? "0" : "") + (new Date().getMonth() + 1),"Check 'm' format");
+					equal(date_to_string("M"),(function() {
+						switch (new Date().getMonth())
+						{
+							case 0:
+								return "Jan";
+
+							case 1:
+								return "Feb";
+
+							case 2:
+								return "Mar";
+
+							case 3:
+								return "Apr";
+
+							case 4:
+								return "May";
+
+							case 5:
+								return "Jun";
+
+							case 6:
+								return "Jul";
+
+							case 7:
+								return "Aug";
+
+							case 8:
+								return "Sep";
+
+							case 9:
+								return "Oct";
+
+							case 10:
+								return "Nov";
+
+							case 11:
+								return "Dec";
+						}
+					})(),"Check 'F' format");
+					equal(date_to_string("n"),new Date().getMonth() + 1,"Check 'n' format");
+					equal(date_to_string("N"),new Date().getDay() == 0 ? 7 : new Date().getDay(),"Check 'N' format");
+					equal(date_to_string("o"),new Date().getWeekYear(),"Check 'o' format");
+					equal(date_to_string("O"),(function() {
+						var
+							first = parseInt(Math.abs(new Date().getTimezoneOffset() / 60),10),
+							second = Math.abs(new Date().getTimezoneOffset() % 60);
+						return (new Date().getTimezoneOffset() < 0 ? "+" : "-") + (first < 10 ? "0" : "") + first + (second < 10 ? "0" : "") + second;
+					})(),"Check 'O' format");
+					equal(date_to_string("P"),(function() {
+						var
+							first = parseInt(Math.abs(new Date().getTimezoneOffset() / 60),10),
+							second = Math.abs(new Date().getTimezoneOffset() % 60);
+						return (new Date().getTimezoneOffset() < 0 ? "+" : "-") + (first < 10 ? "0" : "") + first + ":" + (second < 10 ? "0" : "") + second;
+					})(),"Check 'P' format");
+					equal(date_to_string("r"),date_to_string("D, d M Y H:i:s O"),"Check 'r' format");
+					equal(date_to_string("s"),(new Date().getSeconds() < 10 ? "0" : "") + new Date().getSeconds(),"Check 's' format");
+					equal(date_to_string("S"),(function() {
+						switch (new Date().getDate())
+						{
+							case 1:
+							case 21:
+							case 31:
+								return "st";
+
+							case 2:
+							case 22:
+								return "nd";
+
+							case 3:
+							case 23:
+								return "rd";
+
+							default:
+								return "th";
+						}
+					})(),"Check 'S' format");
+					equal(date_to_string("t"),new Date(new Date().getFullYear(),new Date().getMonth() + 1,0).getDate(),"Check 't' format");
+					equal(date_to_string("T"),(function() {
+						var abbreviation = String(new Date()).match(/\(([^\)]+)\)$/) || String(new Date()).match(/([A-Z]+) [\d]{4}$/);
+						if (abbreviation)
+							abbreviation = abbreviation[1].match(/[A-Z]/g).join("");
+						return abbreviation;
+					})(),"Check 'T' format");
+					equal(date_to_string("u"),new Date().getMilliseconds() * 1000,"Check 'u' format");
+					equal(date_to_string("U"),new Date().getTime() * 1000,"Check 'U' format");
+					equal(date_to_string("w"),new Date().getDay(),"Check 'w' format");
+					equal(date_to_string("W"),new Date().getWeek(),"Check 'W' format");
+					equal(date_to_string("y"),String(new Date().getFullYear()).substring(2,4),"Check 'y' format");
+					equal(date_to_string("Y"),new Date().getFullYear(),"Check 'Y' format");
+					equal(date_to_string("z"),Math.floor((new Date().getTime() - new Date(new Date().getFullYear(),0,1).getTime()) / (1000 * 60 * 60 * 24)),"Check 'z' format");
+					equal(date_to_string("Z"),(new Date().getTimezoneOffset() < 0 ? "+" : "-") + (new Date().getTimezoneOffset() * 24),"Check 'Z' format");
+				});
+
+				test("Individual Formats (Static)",function() {
+					var date = new Date(1988,5,23,6,23,6,623);
+					equal(date_to_string("a",date),"am","Check 'a' format");
+					equal(date_to_string("A",date),"AM","Check 'A' format");
+					equal(date_to_string("B",date),"516","Check 'B' format");
+					equal(date_to_string("c",date),"1988-06-23T06:23:06","Check 'c' format");
+					equal(date_to_string("d",date),"23","Check 'd' format");
+					equal(date_to_string("D",date),"Thu","Check 'D' format");
+//					equal(date_to_string("e",date),"-0500","Check 'e' format");
+					equal(date_to_string("F",date),"June","Check 'F' format");
+					equal(date_to_string("g",date),"6","Check 'g' format");
+					equal(date_to_string("G",date),"6","Check 'G' format");
+					equal(date_to_string("h",date),"06","Check 'h' format");
+					equal(date_to_string("H",date),"06","Check 'H' format");
+					equal(date_to_string("i",date),"23","Check 'i' format");
+//					equal(date_to_string("I",date),"1","Check 'I' format");
+					equal(date_to_string("j",date),"23","Check 'j' format");
+					equal(date_to_string("l",date),"Thursday","Check 'l' format");
+					equal(date_to_string("L",date),"1","Check 'L' format");
+					equal(date_to_string("m",date),"06","Check 'm' format");
+					equal(date_to_string("n",date),"6","Check 'n' format");
+					equal(date_to_string("N",date),"4","Check 'N' format");
+					equal(date_to_string("o",date),"1988","Check 'o' format");
+//					equal(date_to_string("O",date),"-0500","Check 'O' format");
+//					equal(date_to_string("P",date),"-05:00","Check 'P' format");
+					equal(date_to_string("r",date),"Thu, 23 Jun 1988 06:23:06 -0500","Check 'r' format");
+					equal(date_to_string("s",date),"06","Check 's' format");
+					equal(date_to_string("S",date),"rd","Check 'S' format");
+					equal(date_to_string("t",date),"30","Check 't' format");
+//					equal(date_to_string("T",date),"CDT","Check 'T' format");
+					equal(date_to_string("u",date),"623000","Check 'u' format");
+					equal(date_to_string("U",date),"583068186623000","Check 'U' format");
+					equal(date_to_string("w",date),"4","Check 'w' format");
+					equal(date_to_string("W",date),"25","Check 'W' format");
+					equal(date_to_string("y",date),"88","Check 'y' format");
+					equal(date_to_string("Y",date),"1988","Check 'Y' format");
+					equal(date_to_string("z",date),"174","Check 'z' format");
+//					equal(date_to_string("Z",date),"-7200","Check 'Z' format");
+				});
+
+				test("Combined Formats",function() {
+					equal(date_to_string("Y-m-d"),date_to_string("Y") + "-" + date_to_string("m") + "-" + date_to_string("d"),"Check 'Y-m-d' format");
+					equal(date_to_string("Y/m/d"),date_to_string("Y") + "/" + date_to_string("m") + "/" + date_to_string("d"),"Check 'Y/m/d' format");
+					equal(date_to_string("Y\\\\m\\\\d"),date_to_string("Y") + "\\" + date_to_string("m") + "\\" + date_to_string("d"),"Check 'Y\\m\\d' format");
+				});
+			/* ]]> */
+		</script>
+	</body>
+</html>
