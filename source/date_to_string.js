@@ -261,7 +261,7 @@ if (typeof date_to_string == "undefined")
 				return date.getMilliseconds() * 1000;
 			},
 			U:function(date) {
-				return date.getTime() * 1000;
+				return Math.round(date.getTime() / 1000);
 			},
 			w:function(date) {
 				return date.getDay();

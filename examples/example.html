@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+
+
+<!--
+
+
+
+date_to_string v1.0.0
+
+Copyright (c) 2013 Andrew G. Johnson <andrew@andrewgjohnson.com>
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+@author Andrew G. Johnson <andrew@andrewgjohnson.com>
+@copyright Copyright (c) 2013 Andrew G. Johnson <andrew@andrewgjohnson.com>
+@link http://github.com/andrewgjohnson/date_to_string
+@license http://www.opensource.org/licenses/mit-license.php The MIT License
+@version 1.0.0
+@package date_to_string
+
+
+
+-->
+
+
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<title>date_to_string</title>
+		<style type="text/css">
+			@import "http://yui.yahooapis.com/2.8.1/build/reset/reset-min.css";
+
+			::-ms-clear
+			{
+				display:none
+			}
+
+			body
+			{
+				font-family:"Consolas","Courier New","Courier",monospace;
+				font-size:20px
+			}
+
+			#container
+			{
+				display:none
+			}
+
+			h1
+			{
+				background-color:#f9f9f9;
+				font-size:20px;
+				font-weight:normal;
+				padding:20px 40px
+			}
+
+				h1 a
+				{
+					color:#000000;
+					text-decoration:none
+				}
+				h1 a:hover,h1 a:hover span { color:#3297fd }
+
+					h1 span
+					{
+						color:#cccccc
+					}
+
+						h1 span span
+						{
+							color:#999999
+						}
+
+							h1 span span span
+							{
+								color:#cccccc;
+								font-style:italic
+							}
+
+			#content
+			{
+				padding:20px 40px 0
+			}
+
+				#content p
+				{
+					clear:both;
+					line-height:40px;
+					white-space:nowrap
+				}
+				#content p.tag,#content p.comment { color:#999999;font-size:13px;height:20px;line-height:20px }
+
+					#content span,#content input
+					{
+						background-color:transparent;
+						border:0;
+						display:block;
+						float:left;
+						font-family:"Consolas","Courier New","Courier",monospace;
+						font-size:20px;
+						height:40px;
+						line-height:40px;
+						padding:0;
+						white-space:nowrap;
+						width:auto
+					}
+					#content input       { color:#3297fd;padding:0 10px;width:100px         }
+					#content input:hover { background-color:#f5faff;cursor:pointer          }
+					#content input:focus { background-color:#3297fd;color:#ffffff;outline:0 }
+
+			#button
+			{
+				padding:20px 40px 40px;
+				height:40px
+			}
+
+				#button input
+				{
+					cursor:pointer;
+					display:block;
+					float:left;
+					font-size:20px;
+					height:40px;
+					line-height:40px;
+					padding:0 20px
+				}
+		</style>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script src="../source/date_to_string.js"></script>
+	</head>
+	<body>
+		<noscript>
+			<p>Please enable Javascript to use date_to_string</p>
+		</noscript>
+		<div id="container">
+			<h1>
+				<a href="http://www.github.com/andrewgjohnson/date_to_string" title="github.com/andrewgjohnson/date_to_string" target="_blank">date_to_string<span>( <span>format <span>= ""</span></span> , <span>date <span>= new Date()</span></span> )</span></a>
+			</h1>
+			<div id="content">
+				<p class="tag">&lt;script type="text/javascript&gt;</p>
+				<p class="comment">&#160;&#160;&#160;&#160;/* &lt;![CDATA[ */</p>
+				<p><span>&#160;&#160;&#160;&#160;var formatted_date = date_to_string( "</span><input type="text" value="" id="d2s-format" /><span>" , new Date( </span><input type="text" value="" id="d2s-year" /><span> , </span><input type="text" value="" id="d2s-month" /><span> , </span><input type="text" value="" id="d2s-date" /><span> , </span><input type="text" value="" id="d2s-hours" /><span> , </span><input type="text" value="" id="d2s-minutes" /><span> , </span><input type="text" value="" id="d2s-seconds" /><span> , </span><input type="text" value="" id="d2s-milliseconds" /><span> ) );</span></p>
+				<p><span>&#160;&#160;&#160;&#160;alert( formatted_date );</span></p>
+				<p class="comment">&#160;&#160;&#160;&#160;/* ]]&gt; */</p>
+				<p class="tag">&lt;/script&gt;</p>
+			</div>
+			<p id="button">
+				<input type="button" value="Execute" />
+			</p>
+		</div>
+		<script type="text/javascript">
+			/* <![CDATA[ */
+				jQuery(function($) {
+					var
+						input_widths = [],
+						input_change = function() {
+							$(this).css({
+								width:(function(_this) {
+									var key = (String($(_this).val()).replace(/^\s\s*/,"").replace(/\s\s*$/,"")).length == 0 ? " " : $(_this).val();
+									if (typeof input_widths[key] == "undefined")
+									{
+										var element = $("<span />").html((function() {
+											var text = key;
+											while (text != text.replace(" ","&#160;"))
+												text = text.replace(" ","&#160;");
+											return text;
+										})()).appendTo($(_this).parents("p").eq(0));
+										input_widths[key] = element.width();
+										element.remove();
+									}
+									return input_widths[key];
+								})(this)
+							});
+						};
+					$("#content input").keyup(input_change).keydown(input_change).keypress(input_change).each(function() {
+						$(this).val((function(id) {
+							switch (id)
+							{
+								case "d2s-format":
+									return "Y-m-d";
+
+								case "d2s-year":
+									return new Date().getFullYear();
+
+								case "d2s-month":
+									return new Date().getMonth();
+
+								case "d2s-date":
+									return new Date().getDate();
+
+								case "d2s-hours":
+									return new Date().getHours();
+
+								case "d2s-minutes":
+									return new Date().getMinutes();
+
+								case "d2s-seconds":
+									return new Date().getSeconds();
+
+								case "d2s-milliseconds":
+									return new Date().getMilliseconds();
+
+								default:
+									return 0;
+							}
+						})(this.id));
+					});
+					setTimeout(function() { // doing this on pageload was causing element.width() to return zero everytime, probably worthy of some time in the future to remove this hack
+						$("#content input").each(function() {
+							$(this).keypress();
+						});
+					},1);
+
+					$("#button input").click(function() {
+						var number_or_zero = function(number) {
+							return isNaN(String(number)) ? 0 : number;
+						};
+
+					    alert(
+					    	date_to_string(
+					    		$("#d2s-format").val(),
+					    		new Date(
+					    			number_or_zero($("#d2s-year").val()),
+					    			number_or_zero($("#d2s-month").val()),
+					    			number_or_zero($("#d2s-date").val()),
+					    			number_or_zero($("#d2s-hours").val()),
+					    			number_or_zero($("#d2s-minutes").val()),
+					    			number_or_zero($("#d2s-seconds").val()),
+					    			number_or_zero($("#d2s-milliseconds").val())
+					    		)
+					    	)
+					    );
+					});
+
+					$("#container").show();
+				});
+			/* ]]> */
+		</script>
+	</body>
+</html>
