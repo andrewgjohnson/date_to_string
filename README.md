@@ -10,8 +10,8 @@ Reference either the minified or un-minified Javascript source file of date_to_s
 
 ## Example
 
-    date_to_string("Y-m-d") // returns "2013-10-25" (or whatever the current date is)
-    date_to_string("Y-m-d",new Date()) // same as above
+    date_to_string("Y-m-d")                    // returns "2013-10-25" (or whatever the current date is)
+    date_to_string("Y-m-d",new Date())         // same as abovex
     date_to_string("Y-m-d",new Date(2000,0,1)) // returns "2000-01-01"
 
 There is also an interactive example to allow you to quickly experiment that is included in the repository.
