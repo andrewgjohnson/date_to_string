@@ -8,7 +8,7 @@ date_to_string is a Javscript function for transforming a date object into a for
 
 Reference either the minified or un-minified Javascript source file of date_to_string then you can immediately begin using the date_to_string function.  It accepts two parameters; the first should be a string describing the format you would like returned while the second is an optional date object.  When the second parameter is omitted `new Date()` will be used to define the date formatted.
 
-## Example
+## Examples
 
     date_to_string("Y-m-d")                    // returns "2013-10-25" (or whatever the current date is)
     date_to_string("Y-m-d",new Date())         // same as above
